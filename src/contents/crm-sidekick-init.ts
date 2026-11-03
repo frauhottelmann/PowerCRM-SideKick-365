@@ -1,7 +1,12 @@
 import type { PlasmoCSConfig } from "plasmo";
 
+import {
+    EXTENSION_STORAGE_SUFFIX,
+    MESSAGE_SOURCE_Content,
+    MESSAGE_SOURCE_WebPage,
+    PROJECT_PREFIX
+} from "~utils/global/var";
 import { isZohoCrmPage } from "~utils/zoho/environment";
-import { EXTENSION_STORAGE_SUFFIX, MESSAGE_SOURCE_Content, MESSAGE_SOURCE_WebPage, PROJECT_PREFIX } from "~utils/global/var";
 
 export const config: PlasmoCSConfig = {
     matches: [
@@ -34,8 +39,7 @@ window.onload = async () => {
 };
 
 function storeExtensionId() {
-    const id =
-        chrome.runtime?.id ?? (chrome.runtime?.getURL ? new URL(chrome.runtime.getURL("")).host : "");
+    const id = chrome.runtime?.id ?? (chrome.runtime?.getURL ? new URL(chrome.runtime.getURL("")).host : "");
     document.documentElement.setAttribute(PROJECT_PREFIX + EXTENSION_STORAGE_SUFFIX, id);
 }
 

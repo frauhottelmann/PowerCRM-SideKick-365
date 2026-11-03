@@ -28,10 +28,7 @@ class MessageManager {
             this.messageId++;
             const id = this.messageId;
             this.messageCallbacks[id] = resolve;
-            window.postMessage(
-                { id, type, data, source: MESSAGE_SOURCE_WebPage },
-                "*"
-            );
+            window.postMessage({ id, type, data, source: MESSAGE_SOURCE_WebPage }, "*");
         });
     }
 }

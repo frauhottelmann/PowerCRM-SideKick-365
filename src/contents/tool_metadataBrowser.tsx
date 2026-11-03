@@ -1,7 +1,8 @@
 import "~utils/global/classNamePrefix";
-import type { PlasmoCSConfig } from "plasmo";
-import MetadataBrowserProcess from "~processes/metadataBrowser/tool";
 
+import type { PlasmoCSConfig } from "plasmo";
+
+import MetadataBrowserProcess from "~processes/metadataBrowser/tool";
 import { buildGetRootContainer } from "~utils/global/toolContentAbstract";
 
 export const config: PlasmoCSConfig = {

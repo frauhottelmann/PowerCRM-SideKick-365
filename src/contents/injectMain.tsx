@@ -1,11 +1,17 @@
 import "~utils/global/classNamePrefix";
+
 import type { PlasmoCSConfig, PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import { createRoot } from "react-dom/client";
 
 import { MainScreen } from "~processes/main";
 import { ProcessButton } from "~utils/global/.processClass";
+import {
+    DRAWER_CONTAINER_ID,
+    EXTENSION_STORAGE_SUFFIX,
+    MESSAGE_SOURCE_Content,
+    PROJECT_PREFIX
+} from "~utils/global/var";
 import { isZohoCrmPage } from "~utils/zoho/environment";
-import { DRAWER_CONTAINER_ID, EXTENSION_STORAGE_SUFFIX, MESSAGE_SOURCE_Content, PROJECT_PREFIX } from "~utils/global/var";
 
 export const config: PlasmoCSConfig = {
     matches: [

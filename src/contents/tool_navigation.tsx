@@ -1,7 +1,8 @@
 import "~utils/global/classNamePrefix";
-import type { PlasmoCSConfig } from "plasmo";
-import NavigationProcess from "~processes/navigation/tool";
 
+import type { PlasmoCSConfig } from "plasmo";
+
+import NavigationProcess from "~processes/navigation/tool";
 import { buildGetRootContainer } from "~utils/global/toolContentAbstract";
 
 export const config: PlasmoCSConfig = {
