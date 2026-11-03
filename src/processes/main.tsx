@@ -42,6 +42,7 @@ import {
     STORAGE_ListName
 } from "../utils/global/var";
 import { MessageType } from "../utils/types/Message";
+import { setFitOverlaysActive } from "../utils/zoho/fitOverlays";
 import { defaultToolList, getToolButton } from "./buttonList";
 
 export const MainScreen: React.FunctionComponent = () => {
@@ -147,6 +148,8 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             );
             // Let Zoho recalculate layouts that depend on the available width
             window.dispatchEvent(new Event("resize"));
+            // Zoho positions its modals and side sheets from the window width, which the body width does not change
+            setFitOverlaysActive(reservedWidth > 0);
         };
 
         setPageStyle();
