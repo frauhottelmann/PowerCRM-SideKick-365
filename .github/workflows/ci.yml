@@ -1,0 +1,42 @@
+name: "CI"
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm typecheck
+      - name: Build Chrome and Firefox
+        run: pnpm build
+      - name: Lint the Firefox build
+        run: npx --yes web-ext@8 lint --source-dir build/firefox-mv3-prod
+      - name: Upload builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-builds
+          path: |
+            build/chrome-mv3-prod
+            build/firefox-mv3-prod
+          retention-days: 7

@@ -30,9 +30,14 @@ Supported data centers: `zoho.com`, `zoho.eu`, `zoho.in`, `zoho.com.au`, `zoho.j
 pnpm install
 pnpm dev            # development build with live reload (build/chrome-mv3-dev)
 pnpm build          # production builds for Chrome and Firefox
+pnpm typecheck      # TypeScript check without emitting files
 ```
 
 Load `build/chrome-mv3-dev` (or `-prod`) as an unpacked extension in `chrome://extensions`.
+
+### Checks on pull requests
+
+Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm typecheck`, builds both the Chrome and the Firefox variant and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't). The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
 
 ### Releases
 
