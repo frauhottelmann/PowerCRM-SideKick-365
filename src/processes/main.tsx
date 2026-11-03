@@ -124,15 +124,29 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                     panelWidth = MAIN_MENU_WIDTH;
                 }
             }
+            const reservedWidth = drawerButtonWidth + panelWidth;
             // Make room for the side bar and the opened panel next to the Zoho CRM page. Zoho centers the body
             // with auto margins, so pin it to the left or the freed space ends up split on both sides.
-            setStyle(document, "resizezohomainscreen", {
-                body: [
-                    `width: calc(100% - ${drawerButtonWidth + panelWidth}px) !important`,
-                    "margin-left: 0 !important",
-                    "margin-right: 0 !important"
-                ]
-            });
+            // Zoho also places fixed elements (help panel, bottom bar, dialogs) against the viewport, which
+            // ignores the body width. A transform makes the body their containing block, so they end at the
+            // left edge of the side panel too. The side panel itself is mounted outside the body.
+            setStyle(
+                document,
+                "resizezohomainscreen",
+                reservedWidth > 0
+                    ? {
+                          body: [
+                              `width: calc(100% - ${reservedWidth}px) !important`,
+                              "height: 100vh !important",
+                              "margin-left: 0 !important",
+                              "margin-right: 0 !important",
+                              "transform: translateX(0) !important"
+                          ]
+                      }
+                    : {}
+            );
+            // Let Zoho recalculate layouts that depend on the available width
+            window.dispatchEvent(new Event("resize"));
         };
 
         setPageStyle();
