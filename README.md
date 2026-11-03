@@ -39,6 +39,8 @@ Load `build/chrome-mv3-dev` (or `-prod`) as an unpacked extension in `chrome://e
 
 Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm typecheck`, builds both the Chrome and the Firefox variant and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't). The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
 
+Dependabot (`.github/dependabot.yml`) checks the npm/pnpm dependencies and the GitHub Actions once a week and opens pull requests for updates. Minor and patch updates are grouped into one PR per dependency type; major updates come as separate PRs. These PRs run through the same CI checks.
+
 ### Releases
 
 Publishing a GitHub release runs `.github/workflows/release.yml`, which builds the Chrome and Firefox packages and attaches them to the release as `zoho-crm-sidekick-chrome-<version>.zip` and `zoho-crm-sidekick-firefox-<version>.zip`. A tag like `v0.2.0` sets the extension version to `0.2.0`. The workflow can also be started by hand from the Actions tab; the zips are then available as a workflow artifact.
