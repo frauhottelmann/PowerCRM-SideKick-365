@@ -58,7 +58,14 @@ export const getRootContainer = () =>
             if (mainContent && isZohoCrmPage(window.location.href) && bridgeReady) {
                 const drawerContainer = document.createElement("div");
                 drawerContainer.id = ProcessButton.prefixId + DRAWER_CONTAINER_ID;
-                mainContent.append(drawerContainer);
+                // The side panel lives next to <body>, not inside it: while it is open the body becomes the
+                // containing block for Zoho's fixed elements (see main.tsx), which must not apply to the panel.
+                // Keep the text style the panel would have inherited from the body.
+                const bodyStyle = getComputedStyle(mainContent);
+                drawerContainer.style.fontFamily = bodyStyle.fontFamily;
+                drawerContainer.style.fontSize = bodyStyle.fontSize;
+                drawerContainer.style.color = bodyStyle.color;
+                document.documentElement.append(drawerContainer);
                 resolved = true;
                 observer.disconnect();
                 resolve(drawerContainer);
