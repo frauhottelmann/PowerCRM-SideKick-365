@@ -1,9 +1,9 @@
+import { useSnackbar } from "notistack";
 import { createContext, useContext, useEffect, type PropsWithChildren } from "react";
 import { useBoolean } from "usehooks-ts";
+
 import { noOperation } from "./common";
 import { Env } from "./var";
-import { useSnackbar } from "notistack";
-
 
 interface IspDevToolsContext {
     isDebug: ReturnType<typeof useBoolean>;
@@ -15,27 +15,25 @@ const defaultspDevToolsContext: IspDevToolsContext = {
         setTrue: noOperation,
         setFalse: noOperation,
         toggle: noOperation
-    },
-}
+    }
+};
 const spDevToolsContext = createContext<IspDevToolsContext>(defaultspDevToolsContext);
 
 export const useSpDevTools = function () {
     return useContext(spDevToolsContext);
-}
+};
 
 export default function SpDevToolsContextProvider(props: PropsWithChildren) {
-
     const isDebug = useBoolean(false);
 
     useEffect(() => {
         Env.DEBUG = isDebug.value;
     }, [isDebug.value]);
 
-
     return (
         <spDevToolsContext.Provider
             value={{
-                isDebug,
+                isDebug
             }}
             {...props}
         />

@@ -8,7 +8,6 @@ import TooltipInfo from "../components/TooltipInfo";
 import { useEffectOnce } from "../hooks/use/useEffectOnce";
 import { PROJECT_PREFIX } from "./var";
 
-
 export abstract class ToolPanelButton {
     static prefixId: string = PROJECT_PREFIX;
 

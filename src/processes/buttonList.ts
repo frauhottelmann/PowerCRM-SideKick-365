@@ -6,7 +6,6 @@ import navigation from "./navigation/button";
 import recordViewer from "./recordViewer/button";
 import createConfiguration from "./setConfiguration/button";
 
-
 export const ToolPanelButtonList: ToolPanelButton[] = [
     new metadataBrowser(),
     new recordViewer(),
@@ -17,7 +16,6 @@ export const ToolPanelButtonList: ToolPanelButton[] = [
 export function getToolButton(prefixedId: string): ToolPanelButton | null {
     return ToolPanelButtonList.find((tool) => tool.prefixedId === prefixedId);
 }
-
 
 export const defaultToolList: StorageConfiguration[] = ToolPanelButtonList.map((tool) => {
     return {

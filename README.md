@@ -31,13 +31,14 @@ pnpm install
 pnpm dev            # development build with live reload (build/chrome-mv3-dev)
 pnpm build          # production builds for Chrome and Firefox
 pnpm typecheck      # TypeScript check without emitting files
+pnpm format         # format src with Prettier (CI runs pnpm format:check)
 ```
 
 Load `build/chrome-mv3-dev` (or `-prod`) as an unpacked extension in `chrome://extensions`.
 
 ### Checks on pull requests
 
-Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm typecheck`, builds both the Chrome and the Firefox variant and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't). The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
+Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm format:check` and `pnpm typecheck`, builds both the Chrome and the Firefox variant and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't). The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
 
 Dependabot (`.github/dependabot.yml`) checks the npm/pnpm dependencies and the GitHub Actions once a week and opens pull requests for updates. Minor and patch updates are grouped into one PR per dependency type; major updates come as separate PRs. These PRs run through the same CI checks.
 

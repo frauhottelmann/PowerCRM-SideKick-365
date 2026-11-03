@@ -16,13 +16,14 @@ import Tooltip, { type TooltipProps } from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 
+import { defaultToolList, getToolButton, ToolPanelButtonList } from "~processes/buttonList";
+
 import { ProcessButton, type ProcessProps, type ProcessRef } from "../../utils/global/.processClass";
 import { debugLog } from "../../utils/global/common";
 import MessageManager from "../../utils/global/MessageManager";
 import { STORAGE_ForegroundPanes, STORAGE_ListName } from "../../utils/global/var";
 import { MessageType } from "../../utils/types/Message";
 import type { StorageConfiguration } from "../../utils/types/StorageConfiguration";
-import { defaultToolList, getToolButton, ToolPanelButtonList } from "~processes/buttonList";
 
 class SetConfigurationProcess extends ProcessButton {
     static id = "createconfiguration";
@@ -42,10 +43,7 @@ interface ProcessItemProps {
 function ProcessItem(props: ProcessItemProps) {
     const { index, process } = props;
 
-    const processButton = useMemo(
-        () => getToolButton(process.id),
-        [process]
-    );
+    const processButton = useMemo(() => getToolButton(process.id), [process]);
 
     return processButton?.openable ? (
         <Draggable draggableId={process.id} index={index} key={process.id + "draggable"}>

@@ -12,7 +12,9 @@
         "package": "pnpm run package:chrome && pnpm run package:firefox",
         "package:chrome": "plasmo package --target=chrome-mv3",
         "package:firefox": "plasmo package --target=firefox-mv3",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "format": "prettier --write src",
+        "format:check": "prettier --check src"
     },
     "dependencies": {
         "@custom-react-hooks/all": "^2.0.8",

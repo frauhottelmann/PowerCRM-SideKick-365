@@ -1,9 +1,9 @@
 export enum MessageType {
-    GETCURRENTTABID = 'GetCurrentTabId',
-    REFRESHBYPASSCACHE = 'RefreshBypassCache',
+    GETCURRENTTABID = "GetCurrentTabId",
+    REFRESHBYPASSCACHE = "RefreshBypassCache",
 
-    SETCONFIGURATION = 'setConfiguration',
-    GETCONFIGURATION = 'getConfiguration',
+    SETCONFIGURATION = "setConfiguration",
+    GETCONFIGURATION = "getConfiguration",
 
-    OPENOPTIONS = 'OpenOptions',
+    OPENOPTIONS = "OpenOptions"
 }

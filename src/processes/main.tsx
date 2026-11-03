@@ -32,8 +32,8 @@ import OpenOptionsButton from "../utils/components/OpenOptionsButton";
 import PanelDrawerItem from "../utils/components/PanelDrawer/PanelDrawerItem";
 import { debugLog, getBridgeEventName, getCloseEventName, isArraysEquals, setStyle } from "../utils/global/common";
 import MessageManager from "../utils/global/MessageManager";
-import { SidekickThemeProvider } from "../utils/global/theme";
 import SpDevToolsContextProvider, { useSpDevTools } from "../utils/global/spContext";
+import { SidekickThemeProvider } from "../utils/global/theme";
 import {
     APPLICATION_NAME,
     MAIN_MENU_ID,
@@ -49,16 +49,16 @@ export const MainScreen: React.FunctionComponent = () => {
         // <React.StrictMode>
         <StyledEngineProvider injectFirst>
             <SidekickThemeProvider>
-            <SnackbarProvider
-                dense
-                maxSnack={5}
-                Components={{
-                    detailsFile: DetailsSnackbar
-                }}>
-                <SpDevToolsContextProvider>
-                    <MainScreenCustomPanel />
-                </SpDevToolsContextProvider>
-            </SnackbarProvider>
+                <SnackbarProvider
+                    dense
+                    maxSnack={5}
+                    Components={{
+                        detailsFile: DetailsSnackbar
+                    }}>
+                    <SpDevToolsContextProvider>
+                        <MainScreenCustomPanel />
+                    </SpDevToolsContextProvider>
+                </SnackbarProvider>
             </SidekickThemeProvider>
         </StyledEngineProvider>
         // </React.StrictMode>
@@ -447,24 +447,33 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                 })}
 
             <Box position={"static"}>
-                <Tooltip placement="left" title={<Typography variant="caption">{isMainDrawerOpened ? "Hide" : "Show"} {APPLICATION_NAME} toolbar and panels</Typography>}>
-                <Button
-                    onClick={() => setIsMainDrawerOpened((prev) => !prev)}
-                    sx={{
-                        position: "fixed",
-                        bgcolor: "background.paper",
-                        borderRadius: "20px 0 0 20px",
-                        bottom: 10,
-                        right: 0,
-                        minWidth: 0,
-                        width: DRAWER_BUTTON_CONTAINER_WIDTH * 0.8,
-                        height: DRAWER_BUTTON_CONTAINER_WIDTH * 0.8,
-                        zIndex: 100000
-                    }}>
-                    <KeyboardArrowRightIcon
-                        sx={{ transition: "transform 0.3s ease-in-out", transform: isMainDrawerOpened ? "scaleX(1)" : "scaleX(-1)" }}
-                    />
-                </Button>
+                <Tooltip
+                    placement="left"
+                    title={
+                        <Typography variant="caption">
+                            {isMainDrawerOpened ? "Hide" : "Show"} {APPLICATION_NAME} toolbar and panels
+                        </Typography>
+                    }>
+                    <Button
+                        onClick={() => setIsMainDrawerOpened((prev) => !prev)}
+                        sx={{
+                            position: "fixed",
+                            bgcolor: "background.paper",
+                            borderRadius: "20px 0 0 20px",
+                            bottom: 10,
+                            right: 0,
+                            minWidth: 0,
+                            width: DRAWER_BUTTON_CONTAINER_WIDTH * 0.8,
+                            height: DRAWER_BUTTON_CONTAINER_WIDTH * 0.8,
+                            zIndex: 100000
+                        }}>
+                        <KeyboardArrowRightIcon
+                            sx={{
+                                transition: "transform 0.3s ease-in-out",
+                                transform: isMainDrawerOpened ? "scaleX(1)" : "scaleX(-1)"
+                            }}
+                        />
+                    </Button>
                 </Tooltip>
             </Box>
         </>
