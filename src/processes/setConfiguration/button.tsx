@@ -25,5 +25,4 @@ class SetConfigurationButton extends ToolPanelButton {
     }
 }
 
-
 export default SetConfigurationButton;

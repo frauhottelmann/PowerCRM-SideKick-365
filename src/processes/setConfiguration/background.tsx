@@ -1,11 +1,10 @@
-
 const setStorage = (key: string, data: any) => {
     let dataUpdate: { [key: string]: any } = {};
     dataUpdate[key] = data;
     chrome.storage.sync.set(dataUpdate);
-}
+};
 
-export function setExtensionConfiguration(data: { key: string, configurations: any }) {
+export function setExtensionConfiguration(data: { key: string; configurations: any }) {
     setStorage(data.key, data.configurations);
 }
 
