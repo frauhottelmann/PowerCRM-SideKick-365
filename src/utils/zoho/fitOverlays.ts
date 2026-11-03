@@ -6,6 +6,7 @@
 
 const SHIFT_ATTRIBUTE = "data-zoho-sidekick-shift";
 const MAX_DEPTH = 6;
+const ANIMATION_END_EVENTS = ["transitionend", "transitioncancel", "animationend", "animationcancel"];
 
 let active = false;
 let frameRequested = false;
@@ -35,6 +36,7 @@ function observe() {
     bodyObserver.observe(document.body, { childList: true });
     observeWormholes();
     window.addEventListener("resize", scheduleFit);
+    ANIMATION_END_EVENTS.forEach((name) => document.addEventListener(name, onAnimationDone, true));
 }
 
 function observeWormholes() {
@@ -56,6 +58,7 @@ function disconnect() {
     bodyObserver = null;
     wormholeObserver = null;
     window.removeEventListener("resize", scheduleFit);
+    ANIMATION_END_EVENTS.forEach((name) => document.removeEventListener(name, onAnimationDone, true));
 }
 
 function scheduleFit() {
@@ -78,9 +81,22 @@ function fit() {
 function fitChildren(parent: Element, limit: number, depth: number) {
     for (const child of Array.from(parent.children)) {
         if (!(child instanceof HTMLElement)) continue;
+        // Lyte slides sheets in with CSS transitions. Measuring mid-slide shifts them too far, so wait for the
+        // transition to end (see the listeners in observe) before touching this element or its content.
+        if (active && isAnimating(child)) continue;
         if (fitElement(child, limit)) continue;
         if (depth < MAX_DEPTH) fitChildren(child, limit, depth + 1);
     }
+}
+
+function isAnimating(element: HTMLElement): boolean {
+    return (
+        typeof element.getAnimations === "function" && element.getAnimations().some((a) => a.playState === "running")
+    );
+}
+
+function onAnimationDone(event: Event) {
+    if (event.target instanceof Element && event.target.closest("lyte-wormhole")) scheduleFit();
 }
 
 /** Returns true when the element was shifted, so its content needs no check of its own. */
