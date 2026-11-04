@@ -16,7 +16,7 @@ export function useChromeStorage<T>(key: string, defaultData?: T): [T | null, (d
             const dataStored = await chrome.storage.sync.get(key);
             debugLog(key, dataStored);
             if (dataStored && dataStored[key]) {
-                setData(dataStored[key]);
+                setData(dataStored[key] as T);
             } else if (defaultData !== undefined) {
                 setData(defaultData);
             }
