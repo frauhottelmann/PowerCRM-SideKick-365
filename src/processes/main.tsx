@@ -5,19 +5,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import {
-    Badge,
-    Box,
-    Button,
-    Divider,
-    Drawer,
-    IconButton,
-    Paper,
-    StyledEngineProvider,
-    Tooltip,
-    Typography
-} from "@mui/material";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { StyledEngineProvider } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 

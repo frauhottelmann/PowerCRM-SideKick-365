@@ -20,34 +20,17 @@
         "format:check": "prettier --check src"
     },
     "dependencies": {
-        "@custom-react-hooks/all": "^2.0.9",
-        "@emotion/cache": "^11.14.0",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
         "@hello-pangea/dnd": "^18.0.1",
-        "@monaco-editor/react": "^4.7.0",
         "@mui/icons-material": "^7.3.4",
-        "@mui/lab": "7.0.1-beta.18",
         "@mui/material": "^7.3.4",
         "@mui/x-data-grid": "^9.17.0",
-        "@mui/x-date-pickers": "^9.17.0",
-        "@react-icons/all-files": "^4.1.0",
         "@uiw/react-json-view": "2.0.0-alpha.44",
-        "autonumeric": "^4.10.10",
-        "clsx": "^2.1.1",
-        "csstype": "^3.2.3",
-        "dayjs": "^1.11.23",
-        "material-ui-confirm": "^4.0.0",
-        "monaco-editor": "^0.57.0",
-        "next": "^16.4.3",
         "notistack": "^3.0.2",
         "plasmo": "0.90.5",
         "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "react-hotkeys-hook": "^5.3.3",
-        "react-textfit": "^1.1.1",
-        "react-virtuoso": "^4.18.20",
-        "usehooks-ts": "^3.1.1"
+        "react-dom": "18.2.0"
     },
     "devDependencies": {
         "@ianvs/prettier-plugin-sort-imports": "4.7.1",
@@ -57,9 +40,7 @@
         "@types/node": "26.6.6",
         "@types/react": "18.2.48",
         "@types/react-dom": "18.2.18",
-        "@types/react-textfit": "^1.1.4",
         "ajv": "^8.20.0",
-        "crypto-browserify": "^3.12.1",
         "oxlint": "^1.91.0",
         "prettier": "3.9.10",
         "typescript": "7.0.2"
@@ -98,9 +79,6 @@
         }
     },
     "pnpm": {
-        "patchedDependencies": {
-            "math-intrinsics@1.1.0": "patches/math-intrinsics@1.1.0.patch"
-        },
         "overrides": {
             "glob": "^10.5.0"
         }

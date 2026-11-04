@@ -1,5 +1,5 @@
 import MapIcon from "@mui/icons-material/Map";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 import { ToolPanelButton } from "~utils/global/.toolPanelButton";
 

@@ -1,5 +1,9 @@
 import HelpTwoToneIcon from "@mui/icons-material/HelpTwoTone";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import Zoom from "@mui/material/Zoom";
 import { useSnackbar } from "notistack";
 import React, { useMemo } from "react";

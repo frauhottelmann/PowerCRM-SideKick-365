@@ -1,4 +1,4 @@
-import { createSvgIcon } from "@mui/material";
+import { createSvgIcon } from "@mui/material/utils";
 
 // Magic wand with an infinity loop: the extension logo. Source artwork: assets/logo.svg
 export const WandMainIcon = createSvgIcon(
