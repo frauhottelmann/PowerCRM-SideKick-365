@@ -43,6 +43,7 @@ import {
 } from "../utils/global/var";
 import { MessageType } from "../utils/types/Message";
 import { setFitOverlaysActive } from "../utils/zoho/fitOverlays";
+import { useZohoHeaderHeight } from "../utils/zoho/useZohoHeaderHeight";
 import { defaultToolList, getToolButton } from "./buttonList";
 
 export const MainScreen: React.FunctionComponent = () => {
@@ -71,6 +72,7 @@ const MAIN_MENU_WIDTH = 322;
 
 const MainScreenCustomPanel: React.FunctionComponent = () => {
     const [isMainDrawerOpened, setIsMainDrawerOpened] = useState<boolean>(true);
+    const zohoHeaderHeight = useZohoHeaderHeight(DRAWER_BUTTON_CONTAINER_WIDTH);
 
     const [panelOpenedId, setPanelOpenedId] = useState<string | null>(null);
 
@@ -305,7 +307,8 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                                 onClick={() => togglePanelDrawer(MAIN_MENU_ID)}
                                 sx={{
                                     minWidth: "unset",
-                                    aspectRatio: "1 / 1",
+                                    // As high as Zoho's top bar, so the divider below continues Zoho's line
+                                    height: zohoHeaderHeight,
                                     borderRadius: 0,
                                     boxShadow: "unset"
                                 }}>
