@@ -136,16 +136,26 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                 "resizezohomainscreen",
                 reservedWidth > 0
                     ? {
+                          // Zoho keeps hidden fixed elements below the window (e.g. the chatbot at top: 1208px).
+                          // Inside the transformed body they would extend the page and make it scroll past its end,
+                          // so the body clips them like the window did and the document itself does not scroll.
+                          html: ["overflow: hidden !important"],
                           body: [
                               `width: calc(100% - ${reservedWidth}px) !important`,
                               "height: 100vh !important",
                               "margin-left: 0 !important",
                               "margin-right: 0 !important",
-                              "transform: translateX(0) !important"
+                              "transform: translateX(0) !important",
+                              "overflow: clip !important"
                           ]
                       }
                     : {}
             );
+            if (reservedWidth > 0 && document.scrollingElement) {
+                // Undo a scroll that happened before the page was clipped
+                document.scrollingElement.scrollTop = 0;
+                document.scrollingElement.scrollLeft = 0;
+            }
             // Let Zoho recalculate layouts that depend on the available width
             window.dispatchEvent(new Event("resize"));
             // Zoho positions its modals and side sheets from the window width, which the body width does not change
