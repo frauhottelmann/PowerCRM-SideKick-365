@@ -414,7 +414,10 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                 </Stack>
             </Drawer>
 
-            <PanelDrawerItem width={MAIN_MENU_WIDTH} open={isMainDrawerOpened && panelOpenedId === MAIN_MENU_ID}>
+            <PanelDrawerItem
+                width={MAIN_MENU_WIDTH}
+                top={zohoHeaderHeight}
+                open={isMainDrawerOpened && panelOpenedId === MAIN_MENU_ID}>
                 <>
                     <Typography variant="h5" padding={"15px 15px 5px 15px"} sx={{ userSelect: "none" }}>
                         {APPLICATION_NAME}
@@ -456,6 +459,7 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                             key={`${process.prefixedId}-drawertool`}
                             closeProcess={closeProcess}
                             panelOpenedId={isMainDrawerOpened ? panelOpenedId : null}
+                            top={zohoHeaderHeight}
                             process={process}
                             setOpenedProcessesBadge={setOpenedProcessesBadge}
                         />
@@ -566,9 +570,10 @@ interface DrawerToolProps {
     ) => void;
     closeProcess: (processId: string) => void;
     panelOpenedId: string | null;
+    top: number;
 }
 function DrawerTool(props: DrawerToolProps) {
-    const { process, setOpenedProcessesBadge, closeProcess, panelOpenedId } = props;
+    const { process, setOpenedProcessesBadge, closeProcess, panelOpenedId, top } = props;
 
     const verticalTitle = useMemo(() => process.widthNumber < 100 && process.widthNumber > 0, [process]);
 
@@ -614,6 +619,7 @@ function DrawerTool(props: DrawerToolProps) {
         <PanelDrawerItem
             key={`${process.prefixedId}-processPanel`}
             width={width}
+            top={top}
             open={panelOpenedId === process.prefixedId}>
             <Stack direction="column" width="100%" height="100%">
                 <Stack

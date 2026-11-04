@@ -6,10 +6,12 @@ import type { ToolPanelButton } from "../../global/.toolPanelButton";
 interface PanelDrawerItemProps {
     width: ToolPanelButton["width"];
     open: boolean;
+    /** Distance from the top of the window, so the panel starts below Zoho's top bar */
+    top: number;
 }
 
 function PanelDrawerItem(props: PanelDrawerItemProps & PropsWithChildren) {
-    const { width, open, children } = props;
+    const { width, open, top, children } = props;
 
     return (
         <div>
@@ -26,10 +28,15 @@ function PanelDrawerItem(props: PanelDrawerItemProps & PropsWithChildren) {
                         top: "unset",
                         bottom: 0,
                         right: 47,
-                        height: `calc(100% - 34px)`,
+                        height: `calc(100% - ${top}px)`,
                         zIndex: 1199,
                         width: width,
-                        overflow: "visible"
+                        overflow: "visible",
+                        // Wide panels lie over the white Zoho page, so set them off with a line and a shadow
+                        borderTop: 1,
+                        borderLeft: 1,
+                        borderColor: "divider",
+                        boxShadow: "-4px 4px 16px rgba(0, 0, 0, 0.12)"
                     },
                     style: {
                         visibility: "visible"
