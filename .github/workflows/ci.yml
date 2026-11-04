@@ -30,8 +30,12 @@ jobs:
         run: pnpm format:check
       - name: Type check
         run: pnpm typecheck
+      - name: Lint the source code
+        run: pnpm lint
       - name: Build Chrome and Firefox
         run: pnpm build
+      - name: Check the Chrome build
+        run: pnpm lint:chrome
       - name: Lint the Firefox build
         run: npx --yes web-ext@8 lint --source-dir build/firefox-mv3-prod
       - name: Upload builds

@@ -1,6 +1,5 @@
 import { DragDropContext, Draggable, Droppable, type DropResult } from "@hello-pangea/dnd";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Alert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
