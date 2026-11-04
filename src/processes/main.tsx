@@ -593,7 +593,7 @@ function DrawerTool(props: DrawerToolProps) {
         window.addEventListener(eventName, callback, false);
 
         return () => window.removeEventListener(eventName, callback, false);
-    }, [setBadgeInner]);
+    }, [process.prefixedId, setBadgeInner]);
 
     const width = useMemo(() => {
         if (typeof process.width === "string") {

@@ -10,7 +10,9 @@ function messagesStation(
 ) {
     switch (message.type) {
         case MessageType.REFRESHBYPASSCACHE:
-            sender.tab && sender.tab.id && chrome.tabs.reload(sender.tab.id, { bypassCache: true });
+            if (sender.tab?.id) {
+                chrome.tabs.reload(sender.tab.id, { bypassCache: true });
+            }
             return false;
         case MessageType.GETCURRENTTABID:
             sendResponse(sender.tab?.id);
