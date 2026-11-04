@@ -1,6 +1,5 @@
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
-import { useCopyToClipboard } from "usehooks-ts";
 
 const TEXT_MAX_LENGHT = 125;
 
@@ -12,12 +11,10 @@ function useCopyWithSnack(options: useCopyWithSnackOptions = {}) {
     const { callback, textPrefix = "Value" } = options;
 
     const { enqueueSnackbar } = useSnackbar();
-    const [, copytoClipboard] = useCopyToClipboard();
-
     const copy = useCallback(
         (text: string) => {
             if (text) {
-                copytoClipboard(text);
+                navigator.clipboard.writeText(text).catch((error) => console.warn("Copy failed", error));
                 if (text.length > TEXT_MAX_LENGHT) {
                     text = `${text?.slice(0, TEXT_MAX_LENGHT - 3)}...`;
                 }
@@ -27,7 +24,7 @@ function useCopyWithSnack(options: useCopyWithSnackOptions = {}) {
             }
             callback?.();
         },
-        [callback, copytoClipboard, enqueueSnackbar, textPrefix]
+        [callback, enqueueSnackbar, textPrefix]
     );
 
     return copy;
