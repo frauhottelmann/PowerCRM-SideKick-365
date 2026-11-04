@@ -31,6 +31,8 @@ pnpm install
 pnpm dev            # development build with live reload (build/chrome-mv3-dev)
 pnpm build          # production builds for Chrome and Firefox
 pnpm typecheck      # TypeScript check without emitting files
+pnpm lint           # lint src with oxlint
+pnpm lint:chrome    # check the Chrome build (run pnpm build:chrome first)
 pnpm format         # format src with Prettier (CI runs pnpm format:check)
 ```
 
@@ -38,7 +40,9 @@ Load `build/chrome-mv3-dev` (or `-prod`) as an unpacked extension in `chrome://e
 
 ### Checks on pull requests
 
-Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm format:check` and `pnpm typecheck`, builds both the Chrome and the Firefox variant and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't). The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
+Every pull request and every push to `master` runs `.github/workflows/ci.yml`: it installs the dependencies from the lockfile, runs `pnpm format:check` and `pnpm typecheck`, lints the source code with `pnpm lint` ([oxlint](https://oxc.rs), config in `.oxlintrc.json`), builds both the Chrome and the Firefox variant, checks the Chrome build with `pnpm lint:chrome` and lints the Firefox build with `web-ext lint` (errors fail the run, warnings don't).
+
+Chrome has no official counterpart to `web-ext lint`, so `scripts/check-chrome-manifest.mjs` validates the built `manifest.json` against the Chrome manifest schema from SchemaStore (vendored in `scripts/schemas/`, refresh it with `pnpm update:chrome-schema`) and adds MV3 checks: every file the manifest references exists in the build, permissions are known, host patterns are valid and listed under `host_permissions`, no MV2-only keys and the Web Store length limits for name and description. oxlint is used instead of ESLint because typescript-eslint does not support TypeScript 7 yet. The unpacked builds are kept as a workflow artifact for 7 days so a pull request can be tried out without building it locally. Nothing is signed or published.
 
 Dependabot (`.github/dependabot.yml`) checks the npm/pnpm dependencies and the GitHub Actions once a week and opens pull requests for updates. Minor and patch updates are grouped into one PR per dependency type; major updates come as separate PRs. These PRs run through the same CI checks.
 

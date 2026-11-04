@@ -1,4 +1,3 @@
-import type { PlasmoCSConfig, PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import React from "react";
 import { createRoot } from "react-dom/client";
 

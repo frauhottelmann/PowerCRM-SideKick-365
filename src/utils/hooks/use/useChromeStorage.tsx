@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { debugLog } from "../../global/common";
 
@@ -21,6 +21,8 @@ export function useChromeStorage<T>(key: string, defaultData?: T): [T | null, (d
                 setData(defaultData);
             }
         }
+        // Intentional: clear the previous value while the new key is loading.
+        // oxlint-disable-next-line react/set-state-in-effect
         setData(null);
         getData();
     }, [defaultData, key]);

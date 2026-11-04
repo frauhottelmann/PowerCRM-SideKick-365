@@ -92,7 +92,7 @@ const ButtonProcess = (props: { processButton: ToolPanelButton; onClick: () => a
             // </Alert>
             // </Paper>
         ),
-        []
+        [processButton.panelButtonIcon, processButton.menuButtonName, processButton.description]
     );
 
     return (
