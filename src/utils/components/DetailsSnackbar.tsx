@@ -9,9 +9,8 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { makeStyles } from "@mui/styles";
-import clsx from "clsx";
 import { SnackbarContent, useSnackbar, type CustomContentProps } from "notistack";
 import React, { forwardRef, useCallback, useState } from "react";
 
@@ -32,35 +31,11 @@ declare module "notistack" {
     }
 }
 
-const useStyles = makeStyles(() => ({
-    root: {
-        "@media (min-width:600px)": {
-            minWidth: "344px !important"
-        }
-    },
-    icons: {
-        marginLeft: "auto"
-    },
-    expand: {
-        transform: "rotate(0deg)",
-        transition: "all .2s"
-    },
-    expandOpen: {
-        transform: "rotate(180deg)"
-    },
-    paper: {
-        padding: 16,
-        width: "86%"
-    },
-    checkIcon: {
-        fontSize: 20,
-        paddingRight: 4
-    },
-    button: {
-        padding: 0,
-        textTransform: "none"
+const StyledSnackbarContent = styled(SnackbarContent)({
+    "@media (min-width:600px)": {
+        minWidth: "344px !important"
     }
-}));
+});
 
 interface DetailsSnackbarProps extends CustomContentProps {
     detailsVariant: AlertColor;
@@ -72,7 +47,6 @@ interface DetailsSnackbarProps extends CustomContentProps {
 }
 
 const DetailsSnackbar = forwardRef<HTMLDivElement, DetailsSnackbarProps>(({ id, ...props }, ref) => {
-    const classes = useStyles();
     const { closeSnackbar } = useSnackbar();
     const [expanded, setExpanded] = useState(false);
 
@@ -98,7 +72,7 @@ const DetailsSnackbar = forwardRef<HTMLDivElement, DetailsSnackbarProps>(({ id, 
     };
 
     return (
-        <SnackbarContent ref={ref} className={classes.root}>
+        <StyledSnackbarContent ref={ref}>
             <Alert
                 variant="filled"
                 severity={props.detailsVariant}
@@ -110,10 +84,12 @@ const DetailsSnackbar = forwardRef<HTMLDivElement, DetailsSnackbarProps>(({ id, 
                         <IconButton
                             aria-label="Show more"
                             size="small"
-                            sx={{ color: "inherit", opacity: 0.8 }}
-                            className={clsx(classes.expand, {
-                                [classes.expandOpen]: expanded
-                            })}
+                            sx={{
+                                color: "inherit",
+                                opacity: 0.8,
+                                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                                transition: "all .2s"
+                            }}
                             onClick={handleExpandClick}>
                             <ExpandMoreIcon />
                         </IconButton>
@@ -123,18 +99,22 @@ const DetailsSnackbar = forwardRef<HTMLDivElement, DetailsSnackbarProps>(({ id, 
                     </Stack>
                 </AlertTitle>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <Paper className={classes.paper}>
+                    <Paper sx={{ p: "16px", width: "86%" }}>
                         {!!props.detailsNode && props.detailsNode}
                         {props.allowDownload && (
-                            <Button size="small" color="primary" className={classes.button} onClick={downloadTxtFile}>
-                                <CheckCircleIcon className={classes.checkIcon} />
+                            <Button
+                                size="small"
+                                color="primary"
+                                sx={{ p: 0, textTransform: "none" }}
+                                onClick={downloadTxtFile}>
+                                <CheckCircleIcon sx={{ fontSize: 20, pr: "4px" }} />
                                 {props.downloadButtonLabel}
                             </Button>
                         )}
                     </Paper>
                 </Collapse>
             </Alert>
-        </SnackbarContent>
+        </StyledSnackbarContent>
     );
 });
 
