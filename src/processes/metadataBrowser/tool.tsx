@@ -1,18 +1,16 @@
 import RefreshIcon from "@mui/icons-material/Refresh";
-import {
-    Alert,
-    Box,
-    Chip,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    Stack,
-    Tab,
-    Tabs,
-    Tooltip,
-    Typography
-} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { DataGrid, GridToolbar, type GridColDef } from "@mui/x-data-grid";
 import JsonView from "@uiw/react-json-view";
 import { SnackbarProvider } from "notistack";

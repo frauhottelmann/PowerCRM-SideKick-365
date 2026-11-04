@@ -1,5 +1,11 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import Typography from "@mui/material/Typography";
 import { forwardRef, useMemo } from "react";
 
 import { ProcessButton, type ProcessProps, type ProcessRef } from "../../utils/global/.processClass";

@@ -1,15 +1,13 @@
 import RefreshIcon from "@mui/icons-material/Refresh";
-import {
-    Alert,
-    Box,
-    Chip,
-    IconButton,
-    Stack,
-    ToggleButton,
-    ToggleButtonGroup,
-    Tooltip,
-    Typography
-} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { DataGrid, GridToolbarContainer, GridToolbarQuickFilter, type GridColDef } from "@mui/x-data-grid";
 import JsonView from "@uiw/react-json-view";
 import { SnackbarProvider } from "notistack";

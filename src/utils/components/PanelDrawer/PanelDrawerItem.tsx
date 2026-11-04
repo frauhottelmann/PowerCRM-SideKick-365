@@ -1,4 +1,4 @@
-import { Drawer } from "@mui/material";
+import Drawer from "@mui/material/Drawer";
 import React, { type PropsWithChildren } from "react";
 
 import type { ToolPanelButton } from "../../global/.toolPanelButton";

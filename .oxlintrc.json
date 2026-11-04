@@ -14,7 +14,24 @@
         "react/rules-of-hooks": "error",
         "react/exhaustive-deps": "warn",
         "react/jsx-key": "error",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "no-restricted-imports": [
+            "error",
+            {
+                "paths": [
+                    {
+                        "name": "@mui/material",
+                        "message": "Import from the component path (e.g. @mui/material/Button) so unused MUI components stay out of the bundle.",
+                        "allowTypeImports": true
+                    },
+                    {
+                        "name": "@mui/icons-material",
+                        "message": "Import each icon by path (e.g. @mui/icons-material/Close).",
+                        "allowTypeImports": true
+                    }
+                ]
+            }
+        ]
     },
     "ignorePatterns": ["build/**", ".plasmo/**", "node_modules/**"]
 }
