@@ -14,11 +14,11 @@ jobs:
       AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
       AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6.1.0
         with:
           version: 8
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: 20
           cache: "pnpm"
@@ -58,7 +58,7 @@ jobs:
             --approval-timeout 900000
           cp web-ext-artifacts/*.xpi "dist/zoho-crm-sidekick-firefox-$VERSION.xpi"
       - name: Upload workflow artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: extension-packages
           path: dist/*

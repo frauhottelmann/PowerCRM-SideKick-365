@@ -16,11 +16,11 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6.1.0
         with:
           version: 8
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: 20
           cache: "pnpm"
@@ -35,7 +35,7 @@ jobs:
       - name: Lint the Firefox build
         run: npx --yes web-ext@8 lint --source-dir build/firefox-mv3-prod
       - name: Upload builds
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: extension-builds
           path: |
