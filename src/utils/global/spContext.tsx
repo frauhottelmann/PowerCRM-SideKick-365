@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, type PropsWithChildren } from "react";
-import { useBoolean } from "usehooks-ts";
+
+import { useBoolean, type UseBooleanReturn } from "~utils/hooks/use/useBoolean";
 
 import { noOperation } from "./common";
 import { Env } from "./var";
 
 interface IspDevToolsContext {
-    isDebug: ReturnType<typeof useBoolean>;
+    isDebug: UseBooleanReturn;
 }
 const defaultspDevToolsContext: IspDevToolsContext = {
     isDebug: {
