@@ -48,16 +48,16 @@
         "usehooks-ts": "^3.1.1"
     },
     "devDependencies": {
-        "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+        "@ianvs/prettier-plugin-sort-imports": "4.7.1",
         "@mui/types": "^7.4.7",
         "@plasmohq/parcel-resolver": "^0.14.2",
-        "@types/chrome": "0.0.258",
+        "@types/chrome": "0.3.7",
         "@types/node": "20.11.5",
         "@types/react": "18.2.48",
         "@types/react-dom": "18.2.18",
         "@types/react-textfit": "^1.1.4",
         "crypto-browserify": "^3.12.1",
-        "prettier": "3.2.4",
+        "prettier": "3.9.10",
         "typescript": "5.3.3"
     },
     "manifest": {
