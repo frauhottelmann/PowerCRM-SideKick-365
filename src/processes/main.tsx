@@ -216,24 +216,33 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
         });
     }, []);
 
-    const closeProcess = useCallback((processId: string) => {
-        // Let the tool unmount while its container is still attached, so nothing measures a detached node
-        window.dispatchEvent(new CustomEvent(getCloseEventName(processId)));
-        setOpenedProcesses((prev) => {
-            const processToCloseIndex: ToolPanelButton | undefined = prev[processId];
-            if (!processToCloseIndex) {
-                return prev;
+    const closeProcess = useCallback(
+        (processId: string) => {
+            // Tools that open on load belong to the toolbar, so closing one only collapses its panel and keeps
+            // its icon. Otherwise the icon would be gone until the page is reloaded.
+            if (processesList.some((process) => process.id === processId && process.startOnLoad)) {
+                setPanelOpenedId((prev) => (prev === processId ? null : prev));
+                return;
             }
-            // processToCloseIndex.onProcessClose();
-            setPanelOpenedId(null);
-            setOpenedProcessesBadge((prevBadges) => {
-                const { [processId]: _, ...copyBadge } = prevBadges;
-                return copyBadge;
+            // Let the tool unmount while its container is still attached, so nothing measures a detached node
+            window.dispatchEvent(new CustomEvent(getCloseEventName(processId)));
+            setOpenedProcesses((prev) => {
+                const processToCloseIndex: ToolPanelButton | undefined = prev[processId];
+                if (!processToCloseIndex) {
+                    return prev;
+                }
+                // processToCloseIndex.onProcessClose();
+                setPanelOpenedId(null);
+                setOpenedProcessesBadge((prevBadges) => {
+                    const { [processId]: _, ...copyBadge } = prevBadges;
+                    return copyBadge;
+                });
+                const { [processId]: _, ...copy } = prev;
+                return copy;
             });
-            const { [processId]: _, ...copy } = prev;
-            return copy;
-        });
-    }, []);
+        },
+        [processesList]
+    );
 
     const toolsButton = useMemo(
         () =>
