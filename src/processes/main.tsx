@@ -30,7 +30,7 @@ import BlackWhiteIconButton from "../utils/components/BlackWhiteIconButton";
 import DetailsSnackbar from "../utils/components/DetailsSnackbar";
 import OpenOptionsButton from "../utils/components/OpenOptionsButton";
 import PanelDrawerItem from "../utils/components/PanelDrawer/PanelDrawerItem";
-import { debugLog, getBridgeEventName, getCloseEventName, isArraysEquals, setStyle } from "../utils/global/common";
+import { debugLog, getBridgeEventName, isArraysEquals, setStyle } from "../utils/global/common";
 import MessageManager from "../utils/global/MessageManager";
 import SpDevToolsContextProvider, { useSpDevTools } from "../utils/global/spContext";
 import { SidekickThemeProvider } from "../utils/global/theme";
@@ -216,33 +216,11 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
         });
     }, []);
 
-    const closeProcess = useCallback(
-        (processId: string) => {
-            // Tools that open on load belong to the toolbar, so closing one only collapses its panel and keeps
-            // its icon. Otherwise the icon would be gone until the page is reloaded.
-            if (processesList.some((process) => process.id === processId && process.startOnLoad)) {
-                setPanelOpenedId((prev) => (prev === processId ? null : prev));
-                return;
-            }
-            // Let the tool unmount while its container is still attached, so nothing measures a detached node
-            window.dispatchEvent(new CustomEvent(getCloseEventName(processId)));
-            setOpenedProcesses((prev) => {
-                const processToCloseIndex: ToolPanelButton | undefined = prev[processId];
-                if (!processToCloseIndex) {
-                    return prev;
-                }
-                // processToCloseIndex.onProcessClose();
-                setPanelOpenedId(null);
-                setOpenedProcessesBadge((prevBadges) => {
-                    const { [processId]: _, ...copyBadge } = prevBadges;
-                    return copyBadge;
-                });
-                const { [processId]: _, ...copy } = prev;
-                return copy;
-            });
-        },
-        [processesList]
-    );
+    // The X only collapses a tool's panel. Its icon stays in the toolbar and the tool keeps its state; which
+    // tools the toolbar shows is set in the Configuration Manager.
+    const closeProcess = useCallback((processId: string) => {
+        setPanelOpenedId((prev) => (prev === processId ? null : prev));
+    }, []);
 
     const toolsButton = useMemo(
         () =>
