@@ -1,6 +1,9 @@
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DownloadIcon from "@mui/icons-material/Download";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,12 +14,13 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { DataGrid, GridToolbar, type GridColDef } from "@mui/x-data-grid";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import JsonView from "@uiw/react-json-view";
-import { SnackbarProvider } from "notistack";
+import { SnackbarProvider, useSnackbar } from "notistack";
 import { forwardRef, useMemo, useState } from "react";
 
 import { ProcessButton, type ProcessProps, type ProcessRef } from "../../utils/global/.processClass";
+import { downloadJsonFile } from "../../utils/global/common";
 import useCopyWithSnack from "../../utils/hooks/use/useCopyWithSnack";
 import type { ZohoModule } from "../../utils/zoho/types";
 import {
@@ -26,6 +30,7 @@ import {
     useZohoRelatedLists,
     type ZohoQueryState
 } from "../../utils/zoho/ZohoApi";
+import MetadataToolbar from "./MetadataToolbar";
 
 class MetadataBrowserProcess extends ProcessButton {
     static id = "metadatabrowser";
@@ -78,7 +83,7 @@ function MetadataBrowserContent() {
                         density="compact"
                         hideFooterSelectedRowCount
                         onRowClick={(params) => setSelectedModule(params.row)}
-                        slots={{ toolbar: GridToolbar }}
+                        slots={{ toolbar: MetadataToolbar }}
                         slotProps={{ toolbar: { showQuickFilter: true, csvOptions: { fileName: "zoho-modules" } } }}
                     />
                 </Box>
@@ -100,6 +105,15 @@ function ModuleDetails(props: { module: ZohoModule }) {
     const { module } = props;
     const [tab, setTab] = useState(0);
     const copy = useCopyWithSnack({ textPrefix: "API name" });
+    const { enqueueSnackbar } = useSnackbar();
+    const copyModuleJson = () =>
+        navigator.clipboard
+            .writeText(JSON.stringify(module, null, 2))
+            .then(() => enqueueSnackbar("Module JSON copied.", { variant: "default" }))
+            .catch((error) => {
+                console.warn("Copy failed", error);
+                enqueueSnackbar("Copying the JSON failed.", { variant: "error" });
+            });
 
     return (
         <Stack height="100%" spacing={0.5}>
@@ -118,9 +132,22 @@ function ModuleDetails(props: { module: ZohoModule }) {
                 {tab === 1 && <LayoutsGrid moduleApiName={module.api_name} />}
                 {tab === 2 && <RelatedListsGrid moduleApiName={module.api_name} />}
                 {tab === 3 && (
-                    <Box height="100%" overflow="auto">
-                        <JsonView value={module} collapsed={2} displayDataTypes={false} />
-                    </Box>
+                    <Stack height="100%" spacing={0.5}>
+                        <Stack direction="row" spacing={1}>
+                            <Button
+                                size="small"
+                                startIcon={<DownloadIcon />}
+                                onClick={() => downloadJsonFile(module, `zoho-module-${module.api_name}.json`)}>
+                                Download JSON
+                            </Button>
+                            <Button size="small" startIcon={<ContentCopyIcon />} onClick={copyModuleJson}>
+                                Copy JSON
+                            </Button>
+                        </Stack>
+                        <Box flex="1 1 auto" minHeight={0} overflow="auto">
+                            <JsonView value={module} collapsed={2} displayDataTypes={false} />
+                        </Box>
+                    </Stack>
                 )}
             </Box>
         </Stack>
@@ -177,7 +204,7 @@ function FieldsGrid(props: { moduleApiName: string }) {
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
                 initialState={{ columns: { columnVisibilityModel: { json_type: false, length: false } } }}
-                slots={{ toolbar: GridToolbar }}
+                slots={{ toolbar: MetadataToolbar }}
                 slotProps={{
                     toolbar: { showQuickFilter: true, csvOptions: { fileName: `zoho-fields-${props.moduleApiName}` } }
                 }}
@@ -220,8 +247,10 @@ function LayoutsGrid(props: { moduleApiName: string }) {
                 density="compact"
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
-                slots={{ toolbar: GridToolbar }}
-                slotProps={{ toolbar: { showQuickFilter: true } }}
+                slots={{ toolbar: MetadataToolbar }}
+                slotProps={{
+                    toolbar: { showQuickFilter: true, csvOptions: { fileName: `zoho-layouts-${props.moduleApiName}` } }
+                }}
             />
             <JsonDialog value={detail} onClose={() => setDetail(null)} />
         </>
@@ -257,8 +286,13 @@ function RelatedListsGrid(props: { moduleApiName: string }) {
                 loading={relatedLists.loading}
                 density="compact"
                 hideFooterSelectedRowCount
-                slots={{ toolbar: GridToolbar }}
-                slotProps={{ toolbar: { showQuickFilter: true } }}
+                slots={{ toolbar: MetadataToolbar }}
+                slotProps={{
+                    toolbar: {
+                        showQuickFilter: true,
+                        csvOptions: { fileName: `zoho-related-lists-${props.moduleApiName}` }
+                    }
+                }}
             />
         </>
     );

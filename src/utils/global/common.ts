@@ -206,3 +206,17 @@ export function getBridgeEventName(toolId: string) {
 export function getCloseEventName(toolId: string) {
     return `${toolId}:close`;
 }
+
+/** Saves `data` as a pretty-printed JSON file through the browser's download dialog. */
+export function downloadJsonFile(data: unknown, fileName: string) {
+    const file = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(file);
+    const element = document.createElement("a");
+    element.href = url;
+    element.download = fileName;
+    document.body.appendChild(element); // Required for this to work in Firefox
+    element.click();
+    element.remove();
+    // Firefox starts the download asynchronously, so the URL must outlive the click
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
