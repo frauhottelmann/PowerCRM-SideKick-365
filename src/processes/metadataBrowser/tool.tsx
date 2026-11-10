@@ -80,7 +80,7 @@ function MetadataBrowserContent() {
                         rows={modules.data ?? []}
                         columns={moduleColumns}
                         loading={modules.loading}
-                        density="compact"
+                        initialState={{ density: "compact" }}
                         hideFooterSelectedRowCount
                         onRowClick={(params) => setSelectedModule(params.row)}
                         showToolbar
@@ -201,10 +201,12 @@ function FieldsGrid(props: { moduleApiName: string }) {
                 rows={fields.data ?? []}
                 columns={columns}
                 loading={fields.loading}
-                density="compact"
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
-                initialState={{ columns: { columnVisibilityModel: { json_type: false, length: false } } }}
+                initialState={{
+                    density: "compact",
+                    columns: { columnVisibilityModel: { json_type: false, length: false } }
+                }}
                 showToolbar
                 slots={{ toolbar: MetadataToolbar }}
                 slotProps={{
@@ -246,7 +248,7 @@ function LayoutsGrid(props: { moduleApiName: string }) {
                 rows={layouts.data ?? []}
                 columns={columns}
                 loading={layouts.loading}
-                density="compact"
+                initialState={{ density: "compact" }}
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
                 showToolbar
@@ -287,7 +289,7 @@ function RelatedListsGrid(props: { moduleApiName: string }) {
                 rows={relatedLists.data ?? []}
                 columns={columns}
                 loading={relatedLists.loading}
-                density="compact"
+                initialState={{ density: "compact" }}
                 hideFooterSelectedRowCount
                 showToolbar
                 slots={{ toolbar: MetadataToolbar }}

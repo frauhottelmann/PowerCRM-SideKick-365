@@ -160,7 +160,7 @@ function RecordViewerContent() {
                         rows={rows}
                         columns={columns}
                         loading={modules.loading || record.loading}
-                        density="compact"
+                        initialState={{ density: "compact" }}
                         hideFooterSelectedRowCount
                         showToolbar
                         slots={{ toolbar: QuickFilterToolbar }}
