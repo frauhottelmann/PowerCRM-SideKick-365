@@ -162,6 +162,7 @@ function RecordViewerContent() {
                         loading={modules.loading || record.loading}
                         density="compact"
                         hideFooterSelectedRowCount
+                        showToolbar
                         slots={{ toolbar: QuickFilterToolbar }}
                     />
                 ) : (

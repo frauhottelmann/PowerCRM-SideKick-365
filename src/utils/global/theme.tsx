@@ -12,6 +12,8 @@ function getPageRootFontSize(): number {
 
 // Tooltips, menus and dialogs render in the side panel's own container. Inside <body> they would be laid out
 // relative to the narrowed Zoho page while the panel is open, and could end up behind the panel.
+// Popover (used by Menu and Select, e.g. "Rows per page") needs its own default: it passes the anchor's
+// document body to Modal explicitly, so the MuiModal default alone never reaches it.
 function getPortalContainer(): HTMLElement {
     return document.getElementById(PROJECT_PREFIX + DRAWER_CONTAINER_ID) ?? document.body;
 }
@@ -23,7 +25,8 @@ export function SidekickThemeProvider(props: { children: React.ReactNode }) {
                 typography: { htmlFontSize: getPageRootFontSize() },
                 components: {
                     MuiPopper: { defaultProps: { container: getPortalContainer } },
-                    MuiModal: { defaultProps: { container: getPortalContainer } }
+                    MuiModal: { defaultProps: { container: getPortalContainer } },
+                    MuiPopover: { defaultProps: { container: getPortalContainer } }
                 }
             }),
         []
