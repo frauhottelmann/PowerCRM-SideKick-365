@@ -83,6 +83,7 @@ function MetadataBrowserContent() {
                         density="compact"
                         hideFooterSelectedRowCount
                         onRowClick={(params) => setSelectedModule(params.row)}
+                        showToolbar
                         slots={{ toolbar: MetadataToolbar }}
                         slotProps={{ toolbar: { showQuickFilter: true, csvOptions: { fileName: "zoho-modules" } } }}
                     />
@@ -204,6 +205,7 @@ function FieldsGrid(props: { moduleApiName: string }) {
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
                 initialState={{ columns: { columnVisibilityModel: { json_type: false, length: false } } }}
+                showToolbar
                 slots={{ toolbar: MetadataToolbar }}
                 slotProps={{
                     toolbar: { showQuickFilter: true, csvOptions: { fileName: `zoho-fields-${props.moduleApiName}` } }
@@ -247,6 +249,7 @@ function LayoutsGrid(props: { moduleApiName: string }) {
                 density="compact"
                 hideFooterSelectedRowCount
                 onRowDoubleClick={(params) => setDetail(params.row)}
+                showToolbar
                 slots={{ toolbar: MetadataToolbar }}
                 slotProps={{
                     toolbar: { showQuickFilter: true, csvOptions: { fileName: `zoho-layouts-${props.moduleApiName}` } }
@@ -286,6 +289,7 @@ function RelatedListsGrid(props: { moduleApiName: string }) {
                 loading={relatedLists.loading}
                 density="compact"
                 hideFooterSelectedRowCount
+                showToolbar
                 slots={{ toolbar: MetadataToolbar }}
                 slotProps={{
                     toolbar: {
