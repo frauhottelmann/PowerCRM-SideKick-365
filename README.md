@@ -1,5 +1,5 @@
-Zoho CRM SideKick
-=================
+SideKick for Zoho CRM
+=====================
 
 A browser extension (Chrome, Edge and Firefox, Manifest V3) that adds a side panel to Zoho CRM pages with tools for administrators.
 
@@ -50,7 +50,18 @@ Dependabot (`.github/dependabot.yml`) checks the npm/pnpm dependencies and the G
 
 Publishing a GitHub release runs `.github/workflows/release.yml`, which builds the Chrome and Firefox packages and attaches them to the release as `zoho-crm-sidekick-chrome-<version>.zip` and `zoho-crm-sidekick-firefox-<version>.zip`. A tag like `v0.2.0` sets the extension version to `0.2.0`. The workflow can also be started by hand from the Actions tab; the zips are then available as a workflow artifact.
 
-If the repository secrets `AMO_JWT_ISSUER` and `AMO_JWT_SECRET` are set (an API key from the [AMO Developer Hub](https://addons.mozilla.org/developers/addon/api/key/)), releases also get `zoho-crm-sidekick-firefox-<version>.xpi`, signed by Mozilla as an unlisted add-on so it installs in regular Firefox. AMO accepts each version only once, so every release needs a new version number. Without the secrets the signing step is skipped.
+Every release also gets `zoho-crm-sidekick-source-<version>.zip`, the source code that AMO asks for because the package is minified. [BUILDING.md](BUILDING.md) in it explains how to build the package from it.
+
+If the repository secrets `AMO_JWT_ISSUER` and `AMO_JWT_SECRET` are set (an API key from the [AMO Developer Hub](https://addons.mozilla.org/developers/addon/api/key/)), each release is uploaded to AMO together with the source archive. AMO accepts each version only once, so every release needs a new version number. Without the secrets the step is skipped. The repository variable `AMO_CHANNEL` decides where it goes:
+
+- `unlisted` (default): Mozilla signs the add-on without a store listing, and the release gets `zoho-crm-sidekick-firefox-<version>.xpi`, which installs in regular Firefox.
+- `listed`: the version is submitted to the public AMO listing and waits for Mozilla's review; the workflow doesn't wait for it. The add-on must already exist on AMO, so submit the first version by hand.
+
+The Chrome Web Store has no automatic upload here: upload `zoho-crm-sidekick-chrome-<version>.zip` from the release in the [Developer Dashboard](https://chrome.google.com/webstore/devconsole).
+
+### Store listings
+
+The texts for both stores (descriptions, permission justifications, notes for reviewers, required images) are in [store/listing.md](store/listing.md). The privacy policy is [PRIVACY.md](PRIVACY.md).
 
 ### Structure
 
@@ -58,6 +69,10 @@ If the repository secrets `AMO_JWT_ISSUER` and `AMO_JWT_SECRET` are set (an API 
 - `src/processes/` the tools: `button.tsx` (menu entry) and `tool.tsx` (panel content)
 - `src/background/` service worker: configuration storage
 - `src/utils/zoho/` Zoho environment detection and the API client hooks
+
+## Privacy
+
+The extension collects no data and sends nothing anywhere except read-only requests to the Zoho CRM tab you are in. See [PRIVACY.md](PRIVACY.md).
 
 ## License
 

@@ -13,6 +13,9 @@ jobs:
     env:
       AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
       AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+      # "unlisted" (default): Mozilla signs the .xpi, no store listing.
+      # "listed": submit the version to the public AMO listing. The add-on must already exist on AMO.
+      AMO_CHANNEL: ${{ vars.AMO_CHANNEL || 'unlisted' }}
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6.1.1
@@ -45,18 +48,33 @@ jobs:
           mkdir dist
           cp build/chrome-mv3-prod.zip "dist/zoho-crm-sidekick-chrome-$VERSION.zip"
           cp build/firefox-mv3-prod.zip "dist/zoho-crm-sidekick-firefox-$VERSION.zip"
+      - name: Archive the source code for AMO review
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          # Include the version change in package.json, so the source builds the same package
+          REF=$(GIT_COMMITTER_NAME=release GIT_COMMITTER_EMAIL=release@localhost GIT_AUTHOR_NAME=release GIT_AUTHOR_EMAIL=release@localhost git stash create)
+          git archive --format=zip -o "dist/zoho-crm-sidekick-source-$VERSION.zip" "${REF:-HEAD}"
       - name: Sign the Firefox package
         if: github.event_name == 'release' && env.AMO_JWT_ISSUER != ''
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          if [ "$AMO_CHANNEL" = "listed" ]; then
+            # Listed versions go through Mozilla's review queue, which can take days: don't wait for it
+            TIMEOUT=0
+          else
+            TIMEOUT=900000
+          fi
           npx --yes web-ext@8 sign \
             --source-dir build/firefox-mv3-prod \
             --artifacts-dir web-ext-artifacts \
-            --channel unlisted \
+            --channel "$AMO_CHANNEL" \
+            --upload-source-code "dist/zoho-crm-sidekick-source-$VERSION.zip" \
             --api-key "$AMO_JWT_ISSUER" \
             --api-secret "$AMO_JWT_SECRET" \
-            --approval-timeout 900000
-          cp web-ext-artifacts/*.xpi "dist/zoho-crm-sidekick-firefox-$VERSION.xpi"
+            --approval-timeout "$TIMEOUT"
+          if ls web-ext-artifacts/*.xpi >/dev/null 2>&1; then
+            cp web-ext-artifacts/*.xpi "dist/zoho-crm-sidekick-firefox-$VERSION.xpi"
+          fi
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v7
         with:

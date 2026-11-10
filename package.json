@@ -1,8 +1,8 @@
 {
     "name": "zoho-crm-sidekick",
-    "displayName": "Zoho CRM SideKick",
+    "displayName": "SideKick for Zoho CRM",
     "version": "0.2.0",
-    "description": "A side panel for Zoho CRM administrators: metadata browser, record viewer and quick navigation to setup.",
+    "description": "Side panel for Zoho CRM admins: metadata browser, record viewer and setup navigation. Not affiliated with Zoho Corporation.",
     "author": "frauhottelmann (based on PowerCRM SideKick 365 by Sofiane GUEZZAR)",
     "scripts": {
         "dev": "plasmo dev",
